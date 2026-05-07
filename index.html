@@ -4,74 +4,408 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saiko Sushi · Menü</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Sawarabi+Mincho&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Josefin Sans', sans-serif; background: #faf9f7; color: #1a1a1a; }
-  .wrap { max-width: 480px; margin: 0 auto; background: #fff; min-height: 100vh; }
+:root {
+  --cream: #fdf3e3;
+  --warm: #f5e6c8;
+  --red: #c0392b;
+  --darkred: #8b1a1a;
+  --gold: #c8813a;
+  --brown: #6b3a2a;
+  --text: #2c1810;
+  --soft: #a07850;
+}
 
-  .hero { text-align: center; padding: 2.5rem 1.5rem 2rem; border-bottom: 0.5px solid #e8e5e0; }
-  .hero-pre { font-size: 10px; letter-spacing: 0.3em; color: #999; text-transform: uppercase; margin-bottom: 1rem; }
-  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; letter-spacing: 0.15em; color: #1a1a1a; line-height: 1; }
-  .hero-dot { width: 4px; height: 4px; border-radius: 50%; background: #ccc; margin: 1rem auto; }
-  .hero-sub { font-size: 10px; letter-spacing: 0.25em; color: #888; text-transform: uppercase; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .legend { margin: 1rem 1.5rem 0; padding: 1rem; background: #f7f6f4; border-radius: 6px; border: 0.5px solid #e8e5e0; }
-  .legend-title { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
-  .legend-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+body {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  background: #2c1810;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
 
-  .cat-nav { display: flex; border-bottom: 0.5px solid #e8e5e0; margin-top: 1rem; }
-  .cat-btn { flex: 1; padding: 0.8rem 0.25rem; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #aaa; background: none; border: none; border-bottom: 1.5px solid transparent; cursor: pointer; font-family: 'Josefin Sans', sans-serif; transition: color 0.15s, border-color 0.15s; }
-  .cat-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
-  .cat-btn:hover { color: #555; }
+.wrap {
+  max-width: 480px;
+  width: 100%;
+  background: var(--cream);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
 
-  .cat-section { display: none; padding: 0 1.5rem 1rem; }
-  .cat-section.visible { display: block; }
-  .sec-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #aaa; padding: 1.5rem 0 0.75rem; border-bottom: 0.5px solid #e8e5e0; }
+/* HERO */
+.hero {
+  background: var(--cream);
+  position: relative;
+  text-align: center;
+  padding: 32px 24px 24px;
+  overflow: hidden;
+}
 
-  .item { display: flex; align-items: flex-start; gap: 14px; padding: 0.9rem 0; border-bottom: 0.5px solid #f0ede8; }
-  .item:last-child { border-bottom: none; }
-  .item-img { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: #f0ede8; }
-  .item-body { flex: 1; min-width: 0; }
-  .item-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: #1a1a1a; letter-spacing: 0.04em; }
-  .item-ingredients { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.5; letter-spacing: 0.02em; }
-  .item-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; gap: 8px; flex-wrap: wrap; }
-  .allergens { display: flex; gap: 4px; flex-wrap: wrap; }
-  .item-tags { display: flex; gap: 4px; }
-  .item-price { font-size: 13px; letter-spacing: 0.08em; color: #555; white-space: nowrap; font-weight: 400; }
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(192,57,43,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(200,129,58,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
 
-  .al { font-size: 9px; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 2px; text-transform: uppercase; }
-  .al-gluten  { background: #FAEEDA; color: #633806; border: 0.5px solid #EF9F27; }
-  .al-fish    { background: #E6F1FB; color: #0C447C; border: 0.5px solid #85B7EB; }
-  .al-shellfish { background: #FAECE7; color: #712B13; border: 0.5px solid #F0997B; }
-  .al-egg     { background: #FFFBEA; color: #633806; border: 0.5px solid #FAC775; }
-  .al-milk    { background: #F1EFE8; color: #444441; border: 0.5px solid #B4B2A9; }
-  .al-soy     { background: #EAF3DE; color: #27500A; border: 0.5px solid #97C459; }
-  .al-sesame  { background: #EEEDFE; color: #3C3489; border: 0.5px solid #AFA9EC; }
+/* SVG Sakura decoration */
+.deco-top {
+  position: absolute;
+  top: 0; left: 0;
+  width: 140px;
+  opacity: 0.55;
+}
+.deco-top-right {
+  position: absolute;
+  top: 0; right: 0;
+  width: 110px;
+  opacity: 0.4;
+  transform: scaleX(-1);
+}
 
-  .tag { font-size: 9px; letter-spacing: 0.1em; padding: 2px 6px; border-radius: 2px; text-transform: uppercase; }
-  .tag-s { background: #FAECE7; color: #993C1D; }
-  .tag-v { background: #EAF3DE; color: #3B6D11; }
+.logo-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+}
 
-  .footer { text-align: center; padding: 1.25rem 1.5rem; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: #bbb; border-top: 0.5px solid #e8e5e0; margin-top: 0.5rem; }
+.logo-circle {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #f0a830, #e07020);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  box-shadow: 0 4px 16px rgba(192,57,43,0.3);
+  font-size: 36px;
+}
+
+.hero-pre {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--soft);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.hero h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--darkred);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.hero-kanji {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 15px;
+  color: var(--gold);
+  letter-spacing: 0.4em;
+  margin-bottom: 14px;
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 260px;
+}
+.hero-divider::before, .hero-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+}
+.hero-divider::after {
+  background: linear-gradient(to left, transparent, var(--gold));
+}
+.hero-divider span {
+  color: var(--darkred);
+  font-size: 16px;
+}
+
+/* LEGEND */
+.legend {
+  margin: 12px 16px;
+  padding: 12px 14px;
+  background: var(--warm);
+  border-radius: 8px;
+  border: 1px solid rgba(200,129,58,0.3);
+  position: relative;
+}
+.legend::before {
+  content: '⚠';
+  position: absolute;
+  top: -1px; right: 10px;
+  font-size: 9px;
+  color: var(--gold);
+  background: var(--warm);
+  padding: 0 4px;
+}
+.legend-title {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.legend-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+
+/* NAV */
+.cat-nav {
+  display: flex;
+  background: var(--darkred);
+  margin: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.cat-btn {
+  flex: 1;
+  padding: 12px 4px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.55);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-weight: 700;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.cat-btn.active {
+  color: #fff;
+  border-bottom-color: var(--gold);
+  background: rgba(255,255,255,0.08);
+}
+.cat-btn:hover { color: rgba(255,255,255,0.8); }
+
+/* SECTION */
+.cat-section { display: none; }
+.cat-section.visible { display: block; }
+
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 16px 10px;
+}
+.sec-icon { font-size: 22px; }
+.sec-label {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--darkred);
+  letter-spacing: 0.05em;
+}
+.sec-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+}
+
+/* ITEM */
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px dashed rgba(200,129,58,0.25);
+  transition: background 0.15s;
+  position: relative;
+}
+.item:last-child { border-bottom: none; }
+.item:hover { background: rgba(200,129,58,0.04); }
+
+.item-img {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--warm);
+  border: 2px solid rgba(200,129,58,0.2);
+}
+
+.item-body { flex: 1; min-width: 0; }
+
+.item-name {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.03em;
+  margin-bottom: 3px;
+}
+
+.item-ingredients {
+  font-size: 11px;
+  color: var(--soft);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.item-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.allergens { display: flex; gap: 3px; flex-wrap: wrap; }
+
+.item-price {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--darkred);
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+
+/* ALLERGEN BADGES */
+.al {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.al-gluten    { background: #FAEEDA; color: #633806; border: 1px solid #EF9F27; }
+.al-fish      { background: #E6F1FB; color: #0C447C; border: 1px solid #85B7EB; }
+.al-shellfish { background: #FAECE7; color: #712B13; border: 1px solid #F0997B; }
+.al-egg       { background: #FFFBEA; color: #633806; border: 1px solid #FAC775; }
+.al-milk      { background: #F1EFE8; color: #444441; border: 1px solid #B4B2A9; }
+.al-soy       { background: #EAF3DE; color: #27500A; border: 1px solid #97C459; }
+.al-sesame    { background: #EEEDFE; color: #3C3489; border: 1px solid #AFA9EC; }
+
+.tag { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; padding: 2px 6px; border-radius: 3px; text-transform: uppercase; }
+.tag-s { background: #FAECE7; color: #993C1D; border: 1px solid #F0997B; }
+.tag-v { background: #EAF3DE; color: #3B6D11; border: 1px solid #97C459; }
+
+/* CATEGORY DECORATIVE BANNER */
+.cat-banner {
+  background: linear-gradient(135deg, var(--darkred), #a02010);
+  color: white;
+  text-align: center;
+  padding: 6px;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* FOOTER */
+.footer {
+  background: var(--darkred);
+  text-align: center;
+  padding: 16px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+.footer-logo {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  margin-bottom: 6px;
+}
+
+/* Wave divider */
+.wave {
+  display: block;
+  width: 100%;
+  height: 24px;
+  background: var(--darkred);
+  clip-path: ellipse(55% 100% at 50% 0%);
+  margin-top: -1px;
+}
+
+/* Entrance animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.item { animation: fadeUp 0.3s ease both; }
+.item:nth-child(1) { animation-delay: 0.05s; }
+.item:nth-child(2) { animation-delay: 0.1s; }
+.item:nth-child(3) { animation-delay: 0.15s; }
+.item:nth-child(4) { animation-delay: 0.2s; }
+.item:nth-child(5) { animation-delay: 0.25s; }
+.item:nth-child(6) { animation-delay: 0.3s; }
+.item:nth-child(7) { animation-delay: 0.35s; }
+.item:nth-child(8) { animation-delay: 0.4s; }
+.item:nth-child(9) { animation-delay: 0.45s; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
+  <!-- HERO -->
   <div class="hero">
+    <!-- Sakura branch SVG top-left -->
+    <svg class="deco-top" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 110 Q40 60 80 30 Q110 10 150 5" stroke="#c0392b" stroke-width="2" fill="none" opacity="0.5"/>
+      <path d="M50 70 Q65 45 85 35" stroke="#c0392b" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <path d="M30 90 Q50 70 70 60" stroke="#c0392b" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <!-- Flowers -->
+      <circle cx="85" cy="33" r="5" fill="#e85d5d" opacity="0.7"/>
+      <circle cx="82" cy="28" r="3" fill="#f08080" opacity="0.6"/>
+      <circle cx="91" cy="29" r="3.5" fill="#e85d5d" opacity="0.65"/>
+      <circle cx="70" cy="58" r="4" fill="#e85d5d" opacity="0.6"/>
+      <circle cx="50" cy="69" r="3.5" fill="#f08080" opacity="0.55"/>
+      <circle cx="148" cy="8" r="4" fill="#e85d5d" opacity="0.5"/>
+      <circle cx="140" cy="6" r="2.5" fill="#f08080" opacity="0.45"/>
+      <!-- Petals falling -->
+      <ellipse cx="110" cy="50" rx="3" ry="5" fill="#f08080" opacity="0.35" transform="rotate(-30 110 50)"/>
+      <ellipse cx="130" cy="75" rx="2.5" ry="4" fill="#e85d5d" opacity="0.3" transform="rotate(15 130 75)"/>
+      <ellipse cx="60" cy="100" rx="2" ry="3.5" fill="#f08080" opacity="0.25" transform="rotate(-45 60 100)"/>
+    </svg>
+
+    <svg class="deco-top-right" viewBox="0 0 110 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 80 Q70 50 40 25 Q20 10 5 5" stroke="#c0392b" stroke-width="2" fill="none" opacity="0.5"/>
+      <circle cx="40" cy="24" r="4.5" fill="#e85d5d" opacity="0.65"/>
+      <circle cx="35" cy="19" r="3" fill="#f08080" opacity="0.55"/>
+      <circle cx="20" cy="13" r="3.5" fill="#e85d5d" opacity="0.5"/>
+      <ellipse cx="70" cy="55" rx="2.5" ry="4" fill="#f08080" opacity="0.3" transform="rotate(20 70 55)"/>
+    </svg>
+
+    <div class="logo-circle">🍣</div>
     <div class="hero-pre">Japon Restoranı · İstanbul</div>
     <h1>SAIKO SUSHI</h1>
-    <div class="hero-dot"></div>
-    <div class="hero-sub">Menü</div>
+    <div class="hero-kanji">最高 · さいこう</div>
+    <div class="hero-divider"><span>✦</span></div>
   </div>
 
+  <!-- LEGEND -->
   <div class="legend">
-    <div class="legend-title">Alerjen göstergeleri</div>
+    <div class="legend-title">Alerjen Göstergeleri</div>
     <div class="legend-grid">
       <span class="al al-gluten">G Gluten</span>
       <span class="al al-fish">B Balık</span>
-      <span class="al al-shellfish">K Kabuklu deniz ürünleri</span>
+      <span class="al al-shellfish">K Kabuklu</span>
       <span class="al al-egg">Y Yumurta</span>
       <span class="al al-milk">S Süt</span>
       <span class="al al-soy">So Soya</span>
@@ -79,16 +413,21 @@
     </div>
   </div>
 
+  <!-- NAV -->
   <nav class="cat-nav">
-    <button class="cat-btn active" onclick="showCat('maki',this)">Maki</button>
-    <button class="cat-btn" onclick="showCat('atis',this)">Atıştırmalık</button>
-    <button class="cat-btn" onclick="showCat('noodle',this)">Noodle</button>
-    <button class="cat-btn" onclick="showCat('icecek',this)">İçecek</button>
+    <button class="cat-btn active" onclick="showCat('maki',this)">🌊 Maki</button>
+    <button class="cat-btn" onclick="showCat('atis',this)">🥟 Atıştır</button>
+    <button class="cat-btn" onclick="showCat('noodle',this)">🍜 Noodle</button>
+    <button class="cat-btn" onclick="showCat('icecek',this)">🧃 İçecek</button>
   </nav>
 
   <!-- MAKİLER -->
   <div id="maki" class="cat-section visible">
-    <div class="sec-label">Makiler</div>
+    <div class="sec-header">
+      <span class="sec-icon">🍱</span>
+      <span class="sec-label">Maki & Rolls</span>
+      <span class="sec-line"></span>
+    </div>
 
     <div class="item">
       <img class="item-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=128&q=80" alt="Karides Tempura">
@@ -97,7 +436,7 @@
         <div class="item-ingredients">Karides, tempura hamuru, pirinç, nori, mayonez, avokado</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-gluten">G</span><span class="al al-shellfish">K</span><span class="al al-egg">Y</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -109,7 +448,7 @@
         <div class="item-ingredients">Yengeç, avokado, salatalık, pirinç, nori, susam</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-shellfish">K</span><span class="al al-soy">So</span><span class="al al-sesame">Su</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -121,7 +460,7 @@
         <div class="item-ingredients">Somon, krem peynir, salatalık, pirinç, nori</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-fish">B</span><span class="al al-milk">S</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -133,7 +472,7 @@
         <div class="item-ingredients">Somon, avokado, krem peynir, pirinç, nori, sriracha</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-fish">B</span><span class="al al-milk">S</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -145,7 +484,7 @@
         <div class="item-ingredients">Ton balığı, pirinç, nori, mayonez, sriracha</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-fish">B</span><span class="al al-egg">Y</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -157,7 +496,7 @@
         <div class="item-ingredients">Ton balığı (alevde pişirilmiş), pirinç, nori, ponzu sos</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-fish">B</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -166,37 +505,37 @@
       <img class="item-img" src="https://images.unsplash.com/photo-1540648639573-8c848de23f0a?w=128&q=80" alt="Sebzeli">
       <div class="item-body">
         <div class="item-name">Sebzeli</div>
-        <div class="item-ingredients">Avokado, salatalık, havuç, biber, pirinç, nori, susam</div>
+        <div class="item-ingredients">Avokado, salatalık, havuç, turp, pirinç, nori, susam</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-soy">So</span><span class="al al-sesame">Su</span></div>
           <div class="item-tags"><span class="tag tag-v">veg</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
 
     <div class="item">
-      <img class="item-img" src="https://images.unsplash.com/photo-1582450871972-ab5ca641643d?w=128&q=80" alt="Somon Wasabi">
+      <img class="item-img" src="https://images.unsplash.com/photo-1617196034054-4a8b9d9a0d0b?w=128&q=80" alt="Somon Wasabi">
       <div class="item-body">
         <div class="item-name">Somon Wasabi</div>
-        <div class="item-ingredients">Somon, wasabi, avokado, pirinç, nori, susam</div>
+        <div class="item-ingredients">Somon, wasabi, avokado, pirinç, nori</div>
         <div class="item-bottom">
-          <div class="allergens"><span class="al al-fish">B</span><span class="al al-soy">So</span><span class="al al-sesame">Su</span></div>
+          <div class="allergens"><span class="al al-fish">B</span><span class="al al-soy">So</span></div>
           <div class="item-tags"><span class="tag tag-s">acı</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
 
     <div class="item">
-      <img class="item-img" src="https://images.unsplash.com/photo-1606787503048-52f9d4b19f6a?w=128&q=80" alt="Acılı Tavuk">
+      <img class="item-img" src="https://images.unsplash.com/photo-1548940740-204726a19be3?w=128&q=80" alt="Acılı Tavuk">
       <div class="item-body">
         <div class="item-name">Acılı Tavuk</div>
-        <div class="item-ingredients">Tavuk, acı sos, salatalık, pirinç, nori, mayonez</div>
+        <div class="item-ingredients">Tavuk, sriracha, avokado, salatalık, pirinç, nori</div>
         <div class="item-bottom">
-          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-egg">Y</span><span class="al al-soy">So</span></div>
+          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-soy">So</span><span class="al al-egg">Y</span></div>
           <div class="item-tags"><span class="tag tag-s">acı</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -204,7 +543,11 @@
 
   <!-- ATIŞTIRMALIKLAR -->
   <div id="atis" class="cat-section">
-    <div class="sec-label">Atıştırmalıklar</div>
+    <div class="sec-header">
+      <span class="sec-icon">🥟</span>
+      <span class="sec-label">Atıştırmalıklar</span>
+      <span class="sec-line"></span>
+    </div>
 
     <div class="item">
       <img class="item-img" src="https://images.unsplash.com/photo-1601796806570-f4cf3fc9781f?w=128&q=80" alt="Edamame">
@@ -214,7 +557,7 @@
         <div class="item-bottom">
           <div class="allergens"><span class="al al-soy">So</span></div>
           <div class="item-tags"><span class="tag tag-v">veg</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -226,7 +569,7 @@
         <div class="item-ingredients">Miso ezmesi, tofu, deniz yosunu, yeşil soğan, dashi suyu</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-fish">B</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -238,7 +581,7 @@
         <div class="item-ingredients">Karides unu, nişasta, tuz, bitkisel yağ</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-shellfish">K</span><span class="al al-gluten">G</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -250,7 +593,19 @@
         <div class="item-ingredients">Tavuk but, soya sosu, zencefil, sarımsak, nişasta, pirinç unu</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-gluten">G</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=128&q=80" alt="Günün Dondurması">
+      <div class="item-body">
+        <div class="item-name">Günün Dondurması</div>
+        <div class="item-ingredients">Günlük değişen çeşitler — lütfen personele sorunuz</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-milk">S</span><span class="al al-egg">Y</span></div>
+          <div class="item-price">— ₺</div>
         </div>
       </div>
     </div>
@@ -258,7 +613,11 @@
 
   <!-- NOODLE -->
   <div id="noodle" class="cat-section">
-    <div class="sec-label">Noodle ve Pirinç</div>
+    <div class="sec-header">
+      <span class="sec-icon">🍜</span>
+      <span class="sec-label">Noodle & Pirinç</span>
+      <span class="sec-line"></span>
+    </div>
 
     <div class="item">
       <img class="item-img" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=128&q=80" alt="Tavuk Noodle">
@@ -267,7 +626,7 @@
         <div class="item-ingredients">Tavuk, udon eriştesi, soya sosu, zencefil, yeşil soğan</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-gluten">G</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -279,7 +638,7 @@
         <div class="item-ingredients">Karides, udon eriştesi, soya sosu, sarımsak, yeşil soğan</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-gluten">G</span><span class="al al-shellfish">K</span><span class="al al-soy">So</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -292,7 +651,7 @@
         <div class="item-bottom">
           <div class="allergens"><span class="al al-gluten">G</span><span class="al al-soy">So</span><span class="al al-sesame">Su</span></div>
           <div class="item-tags"><span class="tag tag-v">veg</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -304,7 +663,7 @@
         <div class="item-ingredients">Tavuk, pirinç, yumurta, soğan, dashi, soya sosu, mirin</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-egg">Y</span><span class="al al-soy">So</span><span class="al al-fish">B</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -316,7 +675,7 @@
         <div class="item-ingredients">Karides tempura, pirinç, tsuyu sosu, yeşil soğan, nori</div>
         <div class="item-bottom">
           <div class="allergens"><span class="al al-gluten">G</span><span class="al al-shellfish">K</span><span class="al al-soy">So</span><span class="al al-fish">B</span></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -324,7 +683,11 @@
 
   <!-- İÇECEKLER -->
   <div id="icecek" class="cat-section">
-    <div class="sec-label">İçecekler</div>
+    <div class="sec-header">
+      <span class="sec-icon">🧃</span>
+      <span class="sec-label">İçecekler</span>
+      <span class="sec-line"></span>
+    </div>
 
     <div class="item">
       <img class="item-img" src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=128&q=80" alt="Yuzu Soda">
@@ -333,7 +696,7 @@
         <div class="item-ingredients">Yuzu suyu, maden suyu, şeker, buz</div>
         <div class="item-bottom">
           <div class="allergens"></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
@@ -345,21 +708,44 @@
         <div class="item-ingredients">Maden suyu</div>
         <div class="item-bottom">
           <div class="allergens"></div>
-          <div class="item-price">100 TL</div>
+          <div class="item-price">100 ₺</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=128&q=80" alt="Su">
+      <div class="item-body">
+        <div class="item-name">Su</div>
+        <div class="item-ingredients">Şişe su</div>
+        <div class="item-bottom">
+          <div class="allergens"></div>
+          <div class="item-price">100 ₺</div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="footer">Alerjen bilgisi tahminidir · Lütfen personelimize danışınız</div>
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">最高 SAIKO</div>
+    Alerjen bilgisi tahminidir · Lütfen personelimize danışınız
+  </div>
 
 </div>
+
 <script>
 function showCat(id, btn) {
   document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('visible'));
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('visible');
   btn.classList.add('active');
+  // Re-trigger animation
+  document.querySelectorAll('#'+id+' .item').forEach((el,i) => {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = `fadeUp 0.3s ease ${i*0.05}s both`;
+  });
 }
 </script>
 </body>
