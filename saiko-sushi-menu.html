@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saiko Sushi · Menü</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Josefin Sans', sans-serif; background: #faf9f7; color: #1a1a1a; }
+  .wrap { max-width: 480px; margin: 0 auto; background: #fff; min-height: 100vh; }
+
+  .hero { text-align: center; padding: 2.5rem 1.5rem 2rem; border-bottom: 0.5px solid #e8e5e0; }
+  .hero-pre { font-size: 10px; letter-spacing: 0.3em; color: #999; text-transform: uppercase; margin-bottom: 1rem; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; letter-spacing: 0.15em; color: #1a1a1a; line-height: 1; }
+  .hero-dot { width: 4px; height: 4px; border-radius: 50%; background: #ccc; margin: 1rem auto; }
+  .hero-sub { font-size: 10px; letter-spacing: 0.25em; color: #888; text-transform: uppercase; }
+
+  .legend { margin: 1rem 1.5rem 0; padding: 1rem; background: #f7f6f4; border-radius: 6px; border: 0.5px solid #e8e5e0; }
+  .legend-title { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
+  .legend-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+
+  .cat-nav { display: flex; border-bottom: 0.5px solid #e8e5e0; margin-top: 1rem; }
+  .cat-btn { flex: 1; padding: 0.8rem 0.25rem; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #aaa; background: none; border: none; border-bottom: 1.5px solid transparent; cursor: pointer; font-family: 'Josefin Sans', sans-serif; transition: color 0.15s, border-color 0.15s; }
+  .cat-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+  .cat-btn:hover { color: #555; }
+
+  .cat-section { display: none; padding: 0 1.5rem 1rem; }
+  .cat-section.visible { display: block; }
+  .sec-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #aaa; padding: 1.5rem 0 0.75rem; border-bottom: 0.5px solid #e8e5e0; }
+
+  .item { display: flex; align-items: flex-start; gap: 14px; padding: 0.9rem 0; border-bottom: 0.5px solid #f0ede8; }
+  .item:last-child { border-bottom: none; }
+  .item-img { width: 64px; height: 64px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: #f0ede8; }
+  .item-body { flex: 1; min-width: 0; }
+  .item-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: #1a1a1a; letter-spacing: 0.04em; }
+  .item-ingredients { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.5; letter-spacing: 0.02em; }
+  .item-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; gap: 8px; flex-wrap: wrap; }
+  .allergens { display: flex; gap: 4px; flex-wrap: wrap; }
+  .item-tags { display: flex; gap: 4px; }
+  .item-price { font-size: 13px; letter-spacing: 0.08em; color: #555; white-space: nowrap; font-weight: 400; }
+
+  .al { font-size: 9px; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 2px; text-transform: uppercase; }
+  .al-gluten  { background: #FAEEDA; color: #633806; border: 0.5px solid #EF9F27; }
+  .al-fish    { background: #E6F1FB; color: #0C447C; border: 0.5px solid #85B7EB; }
+  .al-shellfish { background: #FAECE7; color: #712B13; border: 0.5px solid #F0997B; }
+  .al-egg     { background: #FFFBEA; color: #633806; border: 0.5px solid #FAC775; }
+  .al-milk    { background: #F1EFE8; color: #444441; border: 0.5px solid #B4B2A9; }
+  .al-soy     { background: #EAF3DE; color: #27500A; border: 0.5px solid #97C459; }
+  .al-sesame  { background: #EEEDFE; color: #3C3489; border: 0.5px solid #AFA9EC; }
+
+  .tag { font-size: 9px; letter-spacing: 0.1em; padding: 2px 6px; border-radius: 2px; text-transform: uppercase; }
+  .tag-s { background: #FAECE7; color: #993C1D; }
+  .tag-v { background: #EAF3DE; color: #3B6D11; }
+
+  .footer { text-align: center; padding: 1.25rem 1.5rem; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: #bbb; border-top: 0.5px solid #e8e5e0; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-pre">Japon Restoranı · İstanbul</div>
+    <h1>SAIKO SUSHI</h1>
+    <div class="hero-dot"></div>
+    <div class="hero-sub">Menü</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-title">Alerjen göstergeleri</div>
+    <div class="legend-grid">
+      <span class="al al-gluten">G Gluten</span>
+      <span class="al al-fish">B Balık</span>
+      <span class="al al-shellfish">K Kabuklu deniz ürünleri</span>
+      <span class="al al-egg">Y Yumurta</span>
+      <span class="al al-milk">S Süt</span>
+      <span class="al al-soy">So Soya</span>
+      <span class="al al-sesame">Su Susam</span>
+    </div>
+  </div>
+
+  <nav class="cat-nav">
+    <button class="cat-btn active" onclick="showCat('maki',this)">Maki</button>
+    <button class="cat-btn" onclick="showCat('atis',this)">Atıştırmalık</button>
+    <button class="cat-btn" onclick="showCat('noodle',this)">Noodle</button>
+    <button class="cat-btn" onclick="showCat('icecek',this)">İçecek</button>
+  </nav>
+
+  <!-- MAKİLER -->
+  <div id="maki" class="cat-section visible">
+    <div class="sec-label">Makiler</div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=128&q=80" alt="Karides Tempura">
+      <div class="item-body">
+        <div class="item-name">Karides Tempura</div>
+        <div class="item-ingredients">Karides, tempura hamuru, pirinç, nori, mayonez, avokado</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-shellfish">K</span><span class="al al-egg">Y</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=128&q=80" alt="California">
+      <div class="item-body">
+        <div class="item-name">California</div>
+        <div class="item-ingredients">Yengeç, avokado, salatalık, pirinç, nori, susam</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-shellfish">K</span><span class="al al-soy">So</span><span class="al al-sesame">Su</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=128&q=80" alt="Philadelphia">
+      <div class="item-body">
+        <div class="item-name">Philadelphia</div>
+        <div class="item-ingredients">Somon, krem peynir, salatalık, pirinç, nori</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-fish">B</span><span class="al al-milk">S</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=128&q=80" alt="Özel Somon">
+      <div class="item-body">
+        <div class="item-name">Özel Somon</div>
+        <div class="item-ingredients">Somon, avokado, krem peynir, pirinç, nori, sriracha</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-fish">B</span><span class="al al-milk">S</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=128&q=80" alt="Sıcak Ton Balığı">
+      <div class="item-body">
+        <div class="item-name">Sıcak Ton Balığı</div>
+        <div class="item-ingredients">Ton balığı, pirinç, nori, mayonez, sriracha</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-fish">B</span><span class="al al-egg">Y</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1617196034099-6a80c8b36e47?w=128&q=80" alt="Aburi Ton Balığı">
+      <div class="item-body">
+        <div class="item-name">Aburi Ton Balığı</div>
+        <div class="item-ingredients">Ton balığı (alevde pişirilmiş), pirinç, nori, ponzu sos</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-fish">B</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1540648639573-8c848de23f0a?w=128&q=80" alt="Sebzeli">
+      <div class="item-body">
+        <div class="item-name">Sebzeli</div>
+        <div class="item-ingredients">Avokado, salatalık, havuç, biber, pirinç, nori, susam</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-soy">So</span><span class="al al-sesame">Su</span></div>
+          <div class="item-tags"><span class="tag tag-v">veg</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1582450871972-ab5ca641643d?w=128&q=80" alt="Somon Wasabi">
+      <div class="item-body">
+        <div class="item-name">Somon Wasabi</div>
+        <div class="item-ingredients">Somon, wasabi, avokado, pirinç, nori, susam</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-fish">B</span><span class="al al-soy">So</span><span class="al al-sesame">Su</span></div>
+          <div class="item-tags"><span class="tag tag-s">acı</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1606787503048-52f9d4b19f6a?w=128&q=80" alt="Acılı Tavuk">
+      <div class="item-body">
+        <div class="item-name">Acılı Tavuk</div>
+        <div class="item-ingredients">Tavuk, acı sos, salatalık, pirinç, nori, mayonez</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-egg">Y</span><span class="al al-soy">So</span></div>
+          <div class="item-tags"><span class="tag tag-s">acı</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATIŞTIRMALIKLAR -->
+  <div id="atis" class="cat-section">
+    <div class="sec-label">Atıştırmalıklar</div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1601796806570-f4cf3fc9781f?w=128&q=80" alt="Edamame">
+      <div class="item-body">
+        <div class="item-name">Edamame</div>
+        <div class="item-ingredients">Haşlanmış soya fasulyesi, deniz tuzu</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-soy">So</span></div>
+          <div class="item-tags"><span class="tag tag-v">veg</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?w=128&q=80" alt="Miso Çorbası">
+      <div class="item-body">
+        <div class="item-name">Miso Çorbası</div>
+        <div class="item-ingredients">Miso ezmesi, tofu, deniz yosunu, yeşil soğan, dashi suyu</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-fish">B</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=128&q=80" alt="Karides Cipsi">
+      <div class="item-body">
+        <div class="item-name">Karides Cipsi</div>
+        <div class="item-ingredients">Karides unu, nişasta, tuz, bitkisel yağ</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-shellfish">K</span><span class="al al-gluten">G</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1609167830220-7164aa360951?w=128&q=80" alt="Karaage">
+      <div class="item-body">
+        <div class="item-name">Karaage</div>
+        <div class="item-ingredients">Tavuk but, soya sosu, zencefil, sarımsak, nişasta, pirinç unu</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOODLE -->
+  <div id="noodle" class="cat-section">
+    <div class="sec-label">Noodle ve Pirinç</div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=128&q=80" alt="Tavuk Noodle">
+      <div class="item-body">
+        <div class="item-name">Tavuk Noodle</div>
+        <div class="item-ingredients">Tavuk, udon eriştesi, soya sosu, zencefil, yeşil soğan</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=128&q=80" alt="Karides Noodle">
+      <div class="item-body">
+        <div class="item-name">Karides Noodle</div>
+        <div class="item-ingredients">Karides, udon eriştesi, soya sosu, sarımsak, yeşil soğan</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-shellfish">K</span><span class="al al-soy">So</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1623689046182-4420b5a9f2b4?w=128&q=80" alt="Sebzeli Noodle">
+      <div class="item-body">
+        <div class="item-name">Sebzeli Noodle</div>
+        <div class="item-ingredients">Udon eriştesi, havuç, mantar, ıspanak, soya sosu, susam yağı</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-soy">So</span><span class="al al-sesame">Su</span></div>
+          <div class="item-tags"><span class="tag tag-v">veg</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=128&q=80" alt="Tavuk Donburi">
+      <div class="item-body">
+        <div class="item-name">Tavuk Donburi</div>
+        <div class="item-ingredients">Tavuk, pirinç, yumurta, soğan, dashi, soya sosu, mirin</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-egg">Y</span><span class="al al-soy">So</span><span class="al al-fish">B</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1617196034054-4a8b9d9a0d0b?w=128&q=80" alt="Karides Donburi">
+      <div class="item-body">
+        <div class="item-name">Karides Donburi</div>
+        <div class="item-ingredients">Karides tempura, pirinç, tsuyu sosu, yeşil soğan, nori</div>
+        <div class="item-bottom">
+          <div class="allergens"><span class="al al-gluten">G</span><span class="al al-shellfish">K</span><span class="al al-soy">So</span><span class="al al-fish">B</span></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- İÇECEKLER -->
+  <div id="icecek" class="cat-section">
+    <div class="sec-label">İçecekler</div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=128&q=80" alt="Yuzu Soda">
+      <div class="item-body">
+        <div class="item-name">Yuzu Soda</div>
+        <div class="item-ingredients">Yuzu suyu, maden suyu, şeker, buz</div>
+        <div class="item-bottom">
+          <div class="allergens"></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="item-img" src="https://images.unsplash.com/photo-1527960471264-932f39eb5846?w=128&q=80" alt="Soda">
+      <div class="item-body">
+        <div class="item-name">Soda</div>
+        <div class="item-ingredients">Maden suyu</div>
+        <div class="item-bottom">
+          <div class="allergens"></div>
+          <div class="item-price">100 TL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Alerjen bilgisi tahminidir · Lütfen personelimize danışınız</div>
+
+</div>
+<script>
+function showCat(id, btn) {
+  document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('visible');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
