@@ -358,6 +358,30 @@ body {
 .item:nth-child(7) { animation-delay: 0.35s; }
 .item:nth-child(8) { animation-delay: 0.4s; }
 .item:nth-child(9) { animation-delay: 0.45s; }
+/* LIGHTBOX */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox-overlay.open { display: flex; }
+.lightbox-overlay img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  animation: zoomIn 0.2s ease;
+}
+@keyframes zoomIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.item-img { cursor: zoom-in; }
 </style>
 </head>
 <body>
@@ -392,7 +416,7 @@ body {
       <ellipse cx="70" cy="55" rx="2.5" ry="4" fill="#f08080" opacity="0.3" transform="rotate(20 70 55)"/>
     </svg>
 
-    <img src="saikologo.png" alt="Saiko" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;">
+    <div class="logo-circle">🍣</div>
     <div class="hero-pre">Japon Restoranı · İstanbul</div>
     <h1>SAIKO SUSHI</h1>
     <div class="hero-kanji">最高 · さいこう</div>
@@ -734,7 +758,24 @@ body {
 
 </div>
 
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <script>
+// Lightbox
+document.querySelectorAll(".item-img").forEach(img => {
+  img.addEventListener("click", () => {
+    document.getElementById("lightbox-img").src = img.src.replace("w=128", "w=600");
+    document.getElementById("lightbox-img").alt = img.alt;
+    document.getElementById("lightbox").classList.add("open");
+  });
+});
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("open");
+}
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeLightbox(); });
+
 function showCat(id, btn) {
   document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('visible'));
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
